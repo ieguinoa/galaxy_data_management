@@ -45,7 +45,7 @@ plaza_api_calls = {
 call_results = []
 
 for key, api_call in plaza_api_calls.items():
-    print("Getting info for {}".format(key))
+    print("Getting info from {}".format(key))
     try:
         with urllib.request.urlopen(api_call) as response:
             html = response.read()
@@ -63,11 +63,7 @@ for key, api_call in plaza_api_calls.items():
 
 builds={}
 for plaza_list in call_results:
-
     for item in plaza_list: 
-        print(item['common_name'])
-
-        
         if item['eco_type'] == None:
             name = "{common_name} {version}".format(**item)
             gid = "{common_name} {version}".format(**item).replace(' ','_').replace(',', '').replace('(','').replace(')','')
@@ -77,7 +73,11 @@ for plaza_list in call_results:
         if name in builds:
             print("\tGenome for {} already captured".format(item['common_name']))
             continue
-
+        # PLAZA 4.x does not provide all info for the moment, skip these 
+        server_version=item['data_source']['version']
+        if server_version== "4.x":
+            continue
+        print('Adding genome: ' + item['common_name'])
         try:
             url_genome = item['fasta']['genome']['location']
             #url_transcriptome = item['fasta']['transcripts']['location']
@@ -117,11 +117,12 @@ for plaza_list in call_results:
 		'all_tx_tx2gene': tx2gene_all_tx,\
 		'selected_tx_tx2gene': tx2gene_selected_tx,\
                 }
-        except TypeError:
+        except TypeError as e:
+            #raise e
             #print("\n!!! Not all necessary fields are provided !!!")
             #print(json.dumps(item, sort_keys=True, indent=4))
-            print("\n")
-
+            #print("\n")
+            pass
         #except :
         #    print("Error")
             #print(json.dumps(item, sort_keys=True, indent=4))
