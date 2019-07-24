@@ -24,7 +24,7 @@ data_managers:
         - 'kmer_size': '31'
       items: "{{ genomes }}"
       data_table_reload:
-        - salmon_indexes
+        - salmon_indexes_versioned
 
     # Build kallisto index using the transcriptome fasta
     - id: kallisto_index_builder
