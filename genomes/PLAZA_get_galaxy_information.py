@@ -32,13 +32,10 @@ builds_j2 = """genomes:{% for build in builds %}
 
 
 
-# ## Getting genome information available for Galaxy through PLAZA API
+## Getting genome information available for Galaxy through PLAZA API
 plaza_api_calls = {
     # Global API call all available PLAZA instances, contains a merge of all instances.
     'plaza_global': 'https://bioinformatics.psb.ugent.be/plaza/api/get_species_data'
-    #instance specific calls     
-    #'dicots_v4': 'https://bioinformatics.psb.ugent.be/plaza/versions/plaza_v4_dicots/api/get_species_data'
-    #'monocots_v4': 'https://bioinformatics.psb.ugent.be/plaza/versions/plaza_v4_monocots/api/get_species_data"'
 }
 
 
@@ -73,9 +70,9 @@ for plaza_list in call_results:
         if name in builds:
             print("\tGenome for {} already captured".format(item['common_name']))
             continue
-        # PLAZA 4.x does not provide all info for the moment, skip these 
         server_version=item['data_source']['version']
-        if server_version== "4.x":
+        if gid="Calamus_simplicifolius_v1.0":   ## 
+            print(name)
             continue
         print('Adding genome: ' + item['common_name'])
         try:
@@ -102,7 +99,6 @@ for plaza_list in call_results:
                                 gff_selected_tx_exon_features=annotation['location']
                         if annotation['used_features'] == 'all_features':
                                 gff_selected_tx_all_features=annotation['location']
-            #print(name)
             builds[name] = { \
 		'build_id': gid,\
 	        'genome_id': gid,\
@@ -118,21 +114,13 @@ for plaza_list in call_results:
 		'selected_tx_tx2gene': tx2gene_selected_tx,\
                 }
         except TypeError as e:
-            #raise e
-            #print("\n!!! Not all necessary fields are provided !!!")
-            #print(json.dumps(item, sort_keys=True, indent=4))
-            #print("\n")
             pass
-        #except :
-        #    print("Error")
-            #print(json.dumps(item, sort_keys=True, indent=4))
-        #print(json.dumps(item, sort_keys=True, indent=4))  
 
 
 print("\nGenomes found on PLAZA FTP: {}".format(len(builds)))
 
 
-# ## Write genomes to file
+## Write genomes to file
 builds_list = []
 for k, v in sorted(builds.items()):
     builds_list.append(v)
@@ -143,7 +131,6 @@ with open('genomes.yaml', 'w') as f:
 genomes_dir=os.path.dirname(os.path.realpath(__file__)) 
 
 ## Get complete yaml file to use as input to ephemeris
-
 os.system('echo "\\n" >> genomes.yaml # making sure there is a new line at the end') 
 os.system('cat genomes.yaml ' + genomes_dir+ '/data_managers_genome_based.yaml > genome_data_manager_run.yaml')
 os.system('cat genomes.yaml ' + genomes_dir+ '/data_managers_transcriptome_based.yaml > transcriptome_data_manager_run.yaml')

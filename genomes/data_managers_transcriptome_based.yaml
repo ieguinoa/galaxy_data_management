@@ -20,7 +20,7 @@ data_managers:
       params:
         - 'all_fasta_source': '{{ item.build_id }}_all_tx_transcriptome'
         - 'sequence_name': '{{ item.name }}'
-        - 'sequence_id': '{{ item.build_id }}_all_tx_transcriptome'
+        - 'sequence_id': '{{ item.build_id }}_all_tx_transcriptome_q6'
         - 'kmer_size': '31'
       items: "{{ genomes }}"
       data_table_reload:

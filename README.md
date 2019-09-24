@@ -70,7 +70,10 @@ Building a set of .yaml files that can be used as input for ephemeris to automat
      ```
 - The run-data-managers methods in ephemeris requires the "watch_tool_data_dir” setting in galaxy.ini to be True (see https://ephemeris.readthedocs.io/en/latest/commands/run-data-managers.html) when running multiple data managers that are interdependent, as is the case with genome_data_manager_run.yaml and transcriptome_data_manager_run.yaml.
   
-  
+
+## Upgrading 
+ - If upgrading Salmon DM that means there is a new index version, in that case change the index version id in the sequence id template: see genomes/data_managers_transcriptome_based.yaml
+
 ## Adding new data managers
 
 New data managers can be added to `genomes/data_managers_genome_based.yaml` or `genomes/data_managers_transcriptome_based.yaml`, after running `genomes/PLAZA_get_galaxy_information.py` these will be added in the corresponding conf file to be used with ephemeris.
@@ -78,6 +81,7 @@ New data managers can be added to `genomes/data_managers_genome_based.yaml` or `
 - how to find the ID: run it in Galaxy and check the info
 - to make it work you need the version at the end of the ID!
 - for the right parameters go into the wrapper in the repo of the tool (link in ToolShed)
+
 
 ## Known issues
 
