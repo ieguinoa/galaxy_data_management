@@ -16,7 +16,7 @@ data_managers:
 
 
     # Build Salmon index using the transcriptome fasta
-    - id: salmon_index_builder
+    - id: toolshed.g2.bx.psu.edu/repos/iuc/data_manager_kallisto_index_builder/kallisto_index_builder_data_manager/0.43.1
       params:
         - 'all_fasta_source': '{{ item.build_id }}_all_tx_transcriptome'
         - 'sequence_name': '{{ item.name }}'

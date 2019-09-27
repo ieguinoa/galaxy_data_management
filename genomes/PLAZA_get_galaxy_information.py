@@ -71,10 +71,9 @@ for plaza_list in call_results:
             print("\tGenome for {} already captured".format(item['common_name']))
             continue
         server_version=item['data_source']['version']
-        if gid="Calamus_simplicifolius_v1.0":   ## 
-            print(name)
+        if gid=="Calamus_simplicifolius_v1.0":   ## 
             continue
-        print('Adding genome: ' + item['common_name'])
+        print('Adding genome: ' + name) 
         try:
             url_genome = item['fasta']['genome']['location']
             #url_transcriptome = item['fasta']['transcripts']['location']
