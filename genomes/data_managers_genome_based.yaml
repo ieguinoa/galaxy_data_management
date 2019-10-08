@@ -17,7 +17,7 @@ data_managers:
 
     
     ## Load gff_all_tx_all_features
-    - id: data_manager_fetch_gff
+    - id: toolshed.g2.bx.psu.edu/repos/ieguinoa/data_manager_fetch_gff/data_manager_fetch_gff/0.0.1
       params:
         - 'dbkey': '{{ item.genome_id }}'
         - 'reference_source|reference_source_selector': 'url'
@@ -30,7 +30,7 @@ data_managers:
 
 
     ## Load gff_rep_tx_all_features
-    - id: data_manager_fetch_gff
+    - id: toolshed.g2.bx.psu.edu/repos/ieguinoa/data_manager_fetch_gff/data_manager_fetch_gff/0.0.1
       params:
         - 'dbkey': '{{ item.genome_id }}'
         - 'reference_source|reference_source_selector': 'url'
@@ -42,7 +42,7 @@ data_managers:
         - all_gff
 
     ## Load tx2gene table
-    - id: data_manager_fetch_tx2gene
+    - id: toolshed.g2.bx.psu.edu/repos/ieguinoa/data_manager_fetch_tx2gene/data_manager_fetch_tx2gene/0.0.1
       params:
         - 'dbkey': '{{ item.genome_id }}'
         - 'file_type' : 'tx2gene'
@@ -86,4 +86,15 @@ data_managers:
       items: "{{ genomes }}"
       data_table_reload:
         - hisat2_indexes
+
+    # Build bwa index using the genome fasta
+    - id: toolshed.g2.bx.psu.edu/repos/devteam/data_manager_bwa_mem_index_builder/bwa_mem_index_builder_data_manager/0.0.3
+      params:
+        - 'all_fasta_source': '{{ item.build_id }}'
+        - 'sequence_name': '{{ item.name }}'
+        - 'sequence_id': '{{ item.build_id }}'
+        - 'index_algorithm': 'bwtsw'
+      items: "{{ genomes }}"
+      data_table_reload:
+        - bwa_mem_indexes
 
